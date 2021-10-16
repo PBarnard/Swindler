@@ -1,4 +1,4 @@
-name: Build and Run Unit Tests
+name: Build and Run Unit Tests (Manual)
 
 on: workflow_dispatch
 
