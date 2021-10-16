@@ -3,7 +3,7 @@
 namespace Swindler.Client.Contracts
 {
     /// <summary>
-    /// Encapsulated information about the running Mountebank process.
+    /// Encapsulates information about the running Mountebank process.
     /// </summary>
     public class Process
     {
