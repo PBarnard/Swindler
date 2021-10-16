@@ -1,4 +1,4 @@
-name: .NET
+name: Build and Run Unit Tests (CI)
 
 on:
   push:
