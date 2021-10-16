@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+    mountebank:
+        container_name: mountebank
+        build:
+            context: .
+            dockerfile: mountebank.dockerfile
+        ports:
+            - 2525:2525
+            - 4000-4099:4000-4099
+        networks:
+            - apitesting
+networks:
+    apitesting:
+        name: apitesting
