@@ -10,7 +10,7 @@ services:
             - 2525:2525
             - 4000-4099:4000-4099
         networks:
-            - apitesting
+            - swindler
 networks:
-    apitesting:
-        name: apitesting
+    swindler:
+        name: swindler

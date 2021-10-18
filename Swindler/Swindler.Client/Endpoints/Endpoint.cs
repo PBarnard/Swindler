@@ -7,25 +7,27 @@ using System.Threading.Tasks;
 
 namespace Swindler.Client.Endpoints
 {
-    public class EndpointBase
+    public abstract class Endpoint
     {
-        protected static async Task<TypedResponse<T>> HttpGetAsync<T>(string requestUri)
+        protected readonly IHttpClientFactory _httpClientFactory;
+
+        protected Endpoint(IHttpClientFactory httpClientFactory)
         {
-            TypedResponse<T> output;
+            _httpClientFactory = httpClientFactory;
+        }
 
-            using (var client = new HttpClient())
+        protected async Task<TypedResponse<T>> HttpGetAsync<T>(string requestUri)
+        {
+            using var httpClient = _httpClientFactory.CreateClient();
+
+            var result = await httpClient.GetAsync(requestUri);
+            var data = await result.Content.ReadAsStringAsync();
+
+            return new TypedResponse<T>
             {
-                var result = await client.GetAsync(requestUri);
-                var data = await result.Content.ReadAsStringAsync();
-
-                output = new TypedResponse<T>
-                {
-                    StatusCode = result.StatusCode,
-                    Data = JsonSerializer.Deserialize<T>(data)
-                };
-            }
-
-            return output;
+                StatusCode = result.StatusCode,
+                Data = JsonSerializer.Deserialize<T>(data)
+            };
         }
 
         protected static async Task<HttpResponseMessage> HttpPostAsync<T>(string requestUri, T resource)
@@ -62,6 +64,7 @@ namespace Swindler.Client.Endpoints
 
             return output;
         }
+
         protected static async Task<T> GetEndpointResponse<T>(Func<Task<TypedResponse<T>>> endpointRequest) where T : class
         {
             TypedResponse<T> response = null;

@@ -1,15 +1,16 @@
 ﻿using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Swindler.Client.Contracts;
 
 namespace Swindler.Client.Endpoints
 {
-    public class Configuration : EndpointBase
+    public class Configuration : Endpoint
     {
-        private const string Api = "config";
+        private const string Api = "/config";
         private readonly string _apiPath;
 
-        public Configuration(string mountebankLocation)
+        public Configuration(string mountebankLocation, IHttpClientFactory httpClientFactory) : base (httpClientFactory)
         {
             _apiPath = $"{mountebankLocation}{Api}";
         }
