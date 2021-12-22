@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
+using Serilog;
 using Swindler.Client.Contracts;
 
 namespace Swindler.Client.Endpoints
@@ -19,11 +19,11 @@ namespace Swindler.Client.Endpoints
         {
             return await GetEndpointResponse(async () =>
             {
-                Trace.WriteLine("Retrieving Mountebank configuration");
+                Log.Information("Retrieving Mountebank configuration");
 
                 var response = await HttpGetAsync<SystemConfiguration>($"{_apiPath}");
 
-                Trace.WriteLine("Mountebank configuration retrieved successfully:");
+                Log.Information("Mountebank configuration retrieved successfully:");
 
                 return response;
             });

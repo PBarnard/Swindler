@@ -25,7 +25,7 @@ namespace Swindler.Client
         {
             var configuration = await Configuration.GetMountebankConfiguration();
 
-            return configuration.Process.Uptime > 0;
+            return configuration != null && configuration.Process.Uptime > 0;
         }
     }
 }
